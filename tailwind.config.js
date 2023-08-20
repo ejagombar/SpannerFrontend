@@ -9,11 +9,7 @@ export default {
     ],
 
     theme: {
-        extend: {
-            fontFamily: {
-                // sans: 'Fira Code , sans-serif',
-            },
-        },
+        extend: {},
     },
 
     darkMode: 'class',

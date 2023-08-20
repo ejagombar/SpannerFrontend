@@ -1,35 +1,29 @@
 import {
-    Tabs,
-    Tab,
     Navbar,
-    NavbarBrand,
+    Button,
     NavbarContent,
+    NavbarBrand,
+    NavbarItem,
+    Link,
 } from '@nextui-org/react'
-import { Key } from 'react'
-import ThemeSwitch from './themeswitch'
-
-interface Props {
-    currentPage: Key
-    pageNames: string[]
-    setCurrentPage: (currentPage: Key) => void
-}
 
 const Header = () => {
     return (
-        <Navbar>
+        <Navbar position="static">
             <NavbarBrand>
-                <p className="text-lg ">StudentWalletLogo</p>
+                <p className="text-2xl">Spanner</p>
             </NavbarBrand>
-
-            <NavbarContent
-                justify="center"
-                className="hidden sm:flex gap-4 text-2xl"
-            >
-                TimeLine
+            <NavbarContent className="hidden sm:flex gap-4" justify="center">
+                <NavbarItem isActive>Playlist Analyis</NavbarItem>
+                <NavbarItem>Playlist Compare</NavbarItem>
+                <NavbarItem>Top Tracks</NavbarItem>
             </NavbarContent>
-
             <NavbarContent justify="end">
-                <ThemeSwitch />
+                <NavbarItem>
+                    <Button as={Link} color="primary" href="#" variant="flat">
+                        Sign In With Spotify
+                    </Button>
+                </NavbarItem>
             </NavbarContent>
         </Navbar>
     )
