@@ -9,9 +9,27 @@ export default {
     ],
 
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: 'Inter',
+            },
+        },
     },
 
     darkMode: 'class',
-    plugins: [nextui()],
+    plugins: [
+        nextui({
+            themes: {
+                dark: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#21d561',
+                            foreground: '#000000',
+                        },
+                        focus: '#21d561',
+                    },
+                },
+            },
+        }),
+    ],
 }

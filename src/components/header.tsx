@@ -20,7 +20,13 @@ const Header = () => {
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem>
-                    <Button as={Link} color="primary" href="#" variant="flat">
+                    <Button
+                        as={Link}
+                        color="primary"
+                        href="#"
+                        variant="bordered"
+                        radius="full"
+                    >
                         Sign In With Spotify
                     </Button>
                 </NavbarItem>
