@@ -6,12 +6,14 @@ import {
     NavbarItem,
     Link,
 } from '@nextui-org/react'
+import { SpannerLogo } from './icons'
 
 const Header = () => {
     return (
         <Navbar position="static">
             <NavbarBrand>
-                <p className="text-2xl">Spanner</p>
+                <SpannerLogo></SpannerLogo>
+                <p className="text-3xl pl-2">Spanner</p>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem isActive>Playlist Analyis</NavbarItem>
