@@ -6,19 +6,47 @@ import {
     NavbarItem,
     Link,
 } from '@nextui-org/react'
-import { SpannerLogo } from './icons'
+import { Key } from 'react'
+import ThemeSwitch from './themeswitch'
 
-const Header = () => {
+interface Props {
+    currentPage: Key
+    pageNames: string[]
+    setCurrentPage: (currentPage: Key) => void
+}
+
+const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
+    const handleItemClick = (key: string) => {
+        setCurrentPage(key)
+    }
+
     return (
         <Navbar position="static">
             <NavbarBrand>
-                <SpannerLogo></SpannerLogo>
-                <p className="text-3xl pl-2">Spanner</p>
+                <ThemeSwitch></ThemeSwitch>
+                <p
+                    className="text-3xl pl-2"
+                    onClick={() => handleItemClick('Home')}
+                >
+                    Spanner
+                </p>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
-                <NavbarItem isActive>Playlist Analyis</NavbarItem>
-                <NavbarItem>Playlist Compare</NavbarItem>
-                <NavbarItem>Top Tracks</NavbarItem>
+                {pageNames.slice(1).map((item) => (
+                    <Button
+                        key={item}
+                        radius="full"
+                        variant="bordered"
+                        className={`text-xl ${
+                            currentPage === item
+                                ? 'text-green-500'
+                                : 'text-default-800 border-default-300 hover:text-gray-400'
+                        } `}
+                        onClick={() => handleItemClick(item)}
+                    >
+                        {item}
+                    </Button>
+                ))}
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem>

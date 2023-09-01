@@ -6,9 +6,10 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 }
 
 export const SpannerLogo: React.FC<IconSvgProps> = ({
-    size = 45,
+    size = 35,
     width,
     height,
+    color,
     ...props
 }) => {
     return (
@@ -25,9 +26,9 @@ export const SpannerLogo: React.FC<IconSvgProps> = ({
                     d="M-150.543 119.436a6.48 6.48 0 0 1 2.542 3.631c.057.24.1.485.13.73l-.773-.445h0l-3.669-2.117-4.013 2.316v4.636l3.667 2.117.346.2.428.247a6.479 6.479 0 0 1-.699.254 6.48 6.48 0 0 1-8.06-7.365l-3.523-2.033 2.236-3.872 3.522 2.033a6.48 6.48 0 0 1 7.866-.333z"
                     style={{
                         color: '#000',
-                        fill: '#239534',
+                        fill: '#21d561',
                         fillOpacity: 1,
-                        stroke: '#239534',
+                        stroke: '#21d561',
                         strokeWidth: 1.20334,
                         strokeLinecap: 'round',
                         strokeLinejoin: 'round',
@@ -43,7 +44,7 @@ export const SpannerLogo: React.FC<IconSvgProps> = ({
                     style={{
                         fill: 'none',
                         fillOpacity: 1,
-                        stroke: '#239534',
+                        stroke: '#21d561',
                         strokeWidth: 2.13747,
                         strokeLinecap: 'round',
                         strokeLinejoin: 'round',
