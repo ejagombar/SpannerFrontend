@@ -5,6 +5,7 @@ import PlaylistCard from './components/PlaylistCard.tsx'
 import { PlaylistInfo } from './interfaces.tsx'
 import { useState } from 'react'
 import { Key } from 'react'
+import Home from './Pages/home.tsx'
 
 const playlistData: PlaylistInfo = {
     name: 'Waitrose Essentials',
@@ -38,7 +39,7 @@ function App() {
 
     switch (selected) {
         case 'Home':
-            content = <p>Home</p>
+            content = <Home></Home>
             break
         case 'Playlist Analysis':
             content = (
