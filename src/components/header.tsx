@@ -21,7 +21,7 @@ const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
     }
 
     return (
-        <Navbar position="static">
+        <Navbar shouldHideOnScroll>
             <NavbarBrand>
                 <ThemeSwitch></ThemeSwitch>
                 <p
