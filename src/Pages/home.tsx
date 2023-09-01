@@ -5,7 +5,7 @@ import backgroundpic from '/repeat.svg'
 
 const Home = () => {
     const lineStyle = {
-        height: '1260px',
+        height: '1370px',
     }
 
     return (
@@ -22,7 +22,7 @@ const Home = () => {
                     {/* Right Circle */}
                     <div className="w-3 h-3 bg-gray-300 rounded-full absolute bottom-0 left-0 transform translate-y-2 -translate-x-1 glow"></div>
                 </div>
-                <div className="flex flex-col pl-6 items-start max-w-lg">
+                <div className="flex flex-col pl-4 items-start max-w-lg">
                     <p className="Title text-7xl mt-10 mb-24 ">
                         Analyse your listening habits and trends with{' '}
                         <span className="text-primary font-bold">Spanner.</span>

@@ -24,12 +24,12 @@ const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
         <Navbar shouldHideOnScroll>
             <NavbarBrand>
                 <ThemeSwitch></ThemeSwitch>
-                <p
+                <button
                     className="text-3xl pl-2"
                     onClick={() => handleItemClick('Home')}
                 >
                     Spanner
-                </p>
+                </button>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 {pageNames.slice(1).map((item) => (
