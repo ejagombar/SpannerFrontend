@@ -1,6 +1,7 @@
 import { Card, Divider, Radio, RadioGroup } from '@nextui-org/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GridItem, GridItemData } from '../components/gridItem'
+import apiClient from '../services/apiClient'
 
 const myGridItemData: GridItemData = {
     number: '1',
@@ -10,9 +11,36 @@ const myGridItemData: GridItemData = {
     description: 'Salma is poopy',
 }
 
+interface Tracks {
+    ranking: number
+    name: string
+    artist: string
+}
+
+// interface Artists {
+//     ranking: number
+//     name: string
+// }
+
+interface FetchTopTracks {
+    count: number
+    tracks: Tracks[]
+}
+
 const MostListened = () => {
     const [source, setSource] = React.useState('tracks')
     const [track, setTrack] = React.useState('short')
+
+    const [tracks, setTracks] = React.useState<Tracks[]>([])
+    const [error, setError] = React.useState('')
+
+    useEffect(() => {
+        apiClient
+            .get<FetchTopTracks>('/top')
+            .then((res) => setTracks(res.data.tracks))
+            .catch((err) => setError(err.message))
+    })
+
     return (
         <div className="flex flex-col items-center">
             <div className="flex flex-col items-center pt-20 mb-10 max-w-1/2 ">
@@ -45,8 +73,16 @@ const MostListened = () => {
 
                 <Divider></Divider>
 
+                {error && <p className="text-warning pt-5 text-xl">{error}</p>}
                 <div className="grid grid-cols-5 gap-4 mt-4">
-                    <GridItem data={myGridItemData}></GridItem>
+                    {tracks.map((track, index) => (
+                        <GridItem
+                            name={track.name}
+                            description={track.artist}
+                            number={Number(index)}
+                            imageSrc=""
+                        ></GridItem>
+                    ))}
                 </div>
             </div>
         </div>
