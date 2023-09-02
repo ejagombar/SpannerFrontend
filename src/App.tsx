@@ -6,6 +6,7 @@ import { PlaylistInfo } from './interfaces.tsx'
 import { useState } from 'react'
 import { Key } from 'react'
 import Home from './Pages/home.tsx'
+import MostListened from './Pages/mostlistened.tsx'
 
 const playlistData: PlaylistInfo = {
     name: 'Waitrose Essentials',
@@ -26,7 +27,7 @@ function App() {
         'Home',
         'Playlist Analysis',
         'Playlist Comparison',
-        'Top Tracks',
+        'Most Listened',
     ]
     const [selected, setSelected] = useState<Key>('Home')
 
@@ -39,7 +40,7 @@ function App() {
 
     switch (selected) {
         case 'Home':
-            content = <Home></Home>
+            content = <Home />
             break
         case 'Playlist Analysis':
             content = (
@@ -57,8 +58,8 @@ function App() {
         case 'Playlist Comparison':
             content = <p>hest</p>
             break
-        case 'Top Tracks':
-            content = <p>hest</p>
+        case 'Most Listened':
+            content = <MostListened />
             break
         default:
             content = <p>Error. How did we get here?</p>

@@ -1,7 +1,6 @@
-import { Image, Button, Link } from '@nextui-org/react'
+import {Button, Link } from '@nextui-org/react'
 
 import { SpannerLogo } from '../components/icons'
-import backgroundpic from '/repeat.svg'
 
 const Home = () => {
     const lineStyle = {
@@ -10,7 +9,6 @@ const Home = () => {
 
     return (
         <div className="flex flex-col items-center pt-32 mb-10 mr-5">
-            <Image src={backgroundpic}></Image>
             <div className="flex flex-row">
                 <div
                     className="relative w-1 bg-gray-300 hover:animate-pulse ml-2"
