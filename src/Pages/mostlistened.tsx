@@ -6,8 +6,8 @@ const myGridItemData: GridItemData = {
     number: '1',
     imageSrc:
         'https://i.scdn.co/image/ab67706c0000da842843307bd27067924fc05cbe',
-    name: 'Kitty Sucker and the rol',
-    description: 'Frank Carter and the Rattle Snakes',
+    name: 'Salma Poopy',
+    description: 'Salma is poopy',
 }
 
 const MostListened = () => {

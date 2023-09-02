@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, CardBody, Image, Badge } from '@nextui-org/react'
+import { Card, Image } from '@nextui-org/react'
 
 export interface GridItemData {
     imageSrc: string
@@ -27,9 +27,13 @@ export const GridItem: React.FC<GridItemProps> = ({ data }) => {
                 />
             </div>
 
-            <div className="max-w-[200px] break-words">
-                <h4 className="font-bold text-md">{data.name}</h4>
-                <small className="text-default-500">{data.description}</small>
+            <div className="flex items-center h-full max-w-[200px] break-words">
+                <div className="min-h-0 inline-block">
+                    <h4 className="font-bold text-md">{data.name}</h4>
+                    <small className="text-default-500">
+                        {data.description}
+                    </small>
+                </div>
             </div>
         </Card>
     )
