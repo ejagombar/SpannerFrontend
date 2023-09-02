@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from '@nextui-org/react'
+import { Card, Divider, Radio, RadioGroup } from '@nextui-org/react'
 
 interface selectItem {
     label: string
@@ -33,45 +33,27 @@ export const sources: selectItem[] = [
 
 const MostListened = () => {
     return (
-        <div className="flex flex-col items-center pt-20 mb-10 mr-5">
-            <p className="text-6xl">Top Listened</p>
-            <div className="flex flex-row w-full pt-8">
-                <Select
-                    placeholder="Select a timeframe"
-                    className="max-w-xs pr-5"
-                >
-                    {sources.map((source) => (
-                        <SelectItem key={source.value} value={source.value}>
-                            {source.label}
-                        </SelectItem>
-                    ))}
-                </Select>
+        <div className="flex flex-col items-center pt-20 mb-10 ">
+            <p className="text-6xl pb-8">Top Listened</p>
+            <Divider></Divider>
+            <div className="flex flex-row w-full justify-center pt-2 pb-2">
+                <Card className="p-4 mr-2">
+                    <RadioGroup orientation="horizontal">
+                        <Radio value="tracks">Tracks</Radio>
+                        <Radio value="artists">Artists</Radio>
+                    </RadioGroup>
+                </Card>
 
-                <Select
-                    label="Time Period"
-                    placeholder="test"
-                    className="max-w-xs pl-5"
-                >
-                    {timeframes.map((timeframe) => (
-                        <SelectItem
-                            key={timeframe.value}
-                            value={timeframe.value}
-                        >
-                            {timeframe.label}
-                        </SelectItem>
-                    ))}
-                </Select>
-                <RadioGroup
-                    label="Select your favorite city"
-                    orientation="horizontal"
-                >
-                    <Radio value="buenos-aires">Buenos Aires</Radio>
-                    <Radio value="sydney">Sydney</Radio>
-                    <Radio value="san-francisco">San Francisco</Radio>
-                    <Radio value="london">London</Radio>
-                    <Radio value="tokyo">Tokyo</Radio>
-                </RadioGroup>
+                <Card className="p-4 ml-2">
+                    <RadioGroup orientation="horizontal">
+                        <Radio value="short">Last 4 Weeks</Radio>
+                        <Radio value="medium">Last 6 Months</Radio>
+                        <Radio value="long">All Time</Radio>
+                    </RadioGroup>
+                </Card>
             </div>
+
+            <Divider></Divider>
         </div>
     )
 }
