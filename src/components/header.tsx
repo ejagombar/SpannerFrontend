@@ -6,8 +6,9 @@ import {
     NavbarItem,
     Link,
 } from '@nextui-org/react'
-import { Key } from 'react'
+import { Key, useState } from 'react'
 import ThemeSwitch from './themeswitch'
+import apiClient from '../services/apiClient'
 
 interface Props {
     currentPage: Key
@@ -16,8 +17,21 @@ interface Props {
 }
 
 const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
+    const [url, setUrl] = useState<string>('')
+    const [error, setError] = useState<string>('')
+
     const handleItemClick = (key: string) => {
         setCurrentPage(key)
+    }
+
+    const signInBtnClick = () => {
+        apiClient
+            .get<string>('/login')
+            .then((res) => setUrl(res.data))
+            .catch((err) => setError(err.message))
+        console.log(url)
+        console.log(error)
+        window.open(url, 'Spotify Login', 'popup')
     }
 
     return (
@@ -56,6 +70,7 @@ const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
                         href="#"
                         variant="bordered"
                         radius="full"
+                        onPress={signInBtnClick}
                     >
                         Sign In With Spotify
                     </Button>

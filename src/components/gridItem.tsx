@@ -2,21 +2,21 @@ import { Card, Image } from '@nextui-org/react'
 
 export interface GridItemData {
     imageSrc: string
-    number: number
+    ranking: number
     name: string
     description: string
 }
 
 export const GridItem = ({
     imageSrc,
-    number,
+    ranking,
     name,
     description,
 }: GridItemData) => {
     return (
         <Card className="pl-3 pr-3 pb-3 w-[200px] h-[260px]">
             <div className="flex flex-col items-center pb-1">
-                <p className="text-large uppercase font-bold">{number}</p>
+                <p className="text-large uppercase font-bold">{ranking}</p>
                 <Image
                     alt="Card background"
                     className="object-cover"
