@@ -1,4 +1,4 @@
-import {Button, Link } from '@nextui-org/react'
+import { Button, Link } from '@nextui-org/react'
 
 import { SpannerLogo } from '../components/icons'
 
@@ -14,10 +14,7 @@ const Home = () => {
                     className="relative w-1 bg-gray-300 hover:animate-pulse ml-2"
                     style={lineStyle}
                 >
-                    {/* Left Circle */}
                     <div className="w-3 h-3 bg-gray-300 rounded-full absolute top-0 left-0 transform -translate-y-2 -translate-x-1 glow"></div>
-
-                    {/* Right Circle */}
                     <div className="w-3 h-3 bg-gray-300 rounded-full absolute bottom-0 left-0 transform translate-y-2 -translate-x-1 glow"></div>
                 </div>
                 <div className="flex flex-col pl-4 items-start max-w-lg">
@@ -53,7 +50,7 @@ const Home = () => {
                                 href="#"
                                 variant="bordered"
                                 radius="full"
-                                className="mb-16 pt-6 pb-6 bg-success-50"
+                                className="mb-16 pt-6 pb-6"
                             >
                                 <p className="text-2xl align-middle text-primary">
                                     Sign In With Spotify
