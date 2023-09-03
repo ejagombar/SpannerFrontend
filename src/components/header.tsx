@@ -17,21 +17,42 @@ interface Props {
 }
 
 const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
-    const [url, setUrl] = useState<string>('')
     const [error, setError] = useState<string>('')
 
     const handleItemClick = (key: string) => {
         setCurrentPage(key)
     }
 
+    // const signInBtnClick = () => {
+    //     apiClient
+    //         .get<string>('/login')
+    //         .then((res) => setUrl(res.data))
+    //         .catch((err) => setError(err.message))
+    //     console.log(url)
+    //     console.log(error)
+    //     window.open(url, 'Spotify Login', 'popup')
+    // }
+
     const signInBtnClick = () => {
         apiClient
             .get<string>('/login')
-            .then((res) => setUrl(res.data))
+            .then((res) => {
+                const url = res.data
+                const authWindow = window.open(url, 'Spotify Login', 'popup')
+
+                if (authWindow) {
+                    //event listener to check if the popup window is closed
+                    const checkAuthWindowClosed = setInterval(() => {
+                        if (authWindow.closed) {
+                            clearInterval(checkAuthWindowClosed)
+                            console.log('window closed BOOOM')
+                        }
+                    }, 100)
+                } else {
+                    console.error('Failed to open popup window.')
+                }
+            })
             .catch((err) => setError(err.message))
-        console.log(url)
-        console.log(error)
-        window.open(url, 'Spotify Login', 'popup')
     }
 
     return (

@@ -79,7 +79,7 @@ const MostListened = () => {
                         <GridItem
                             name={track.name}
                             description={track.artist}
-                            number={Number(index)}
+                            ranking={Number(index)}
                             imageSrc=""
                         ></GridItem>
                     ))}
