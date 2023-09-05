@@ -30,6 +30,7 @@ function App() {
         'Most Listened',
     ]
     const [selected, setSelected] = useState<Key>('Home')
+    const [signedIn, setSignedIn] = useState<boolean>(false)
 
     const handleSelectionChange = (key: Key) => {
         setSelected(key)
@@ -71,6 +72,8 @@ function App() {
             <div className="flex-grow">
                 <Header
                     pageNames={pageNames}
+                    setSignedIn={setSignedIn}
+                    signedIn={signedIn}
                     setCurrentPage={handleSelectionChange}
                     currentPage={selected}
                 ></Header>

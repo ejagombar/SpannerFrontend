@@ -9,62 +9,67 @@ import {
 import { Key, useState } from 'react'
 import ThemeSwitch from './themeswitch'
 import apiClient from '../services/apiClient'
+import { UserIcon } from './icons'
 
 interface Props {
     currentPage: Key
     pageNames: string[]
     setCurrentPage: (currentPage: Key) => void
+    signedIn: boolean
+    setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
-    const [error, setError] = useState<string>('')
+const signInBtnClick = (
+    setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+    apiClient
+        .get<string>('/login')
+        .then((res) => {
+            const url = res.data
+            const authWindow = window.open(url, 'Spotify Login', 'popup')
 
+            if (authWindow) {
+                //event listener to check if the popup window is closed
+                const checkAuthWindowClosed = setInterval(() => {
+                    if (authWindow.closed) {
+                        clearInterval(checkAuthWindowClosed)
+                        setSignedIn(true)
+
+                        apiClient
+                            .get<string>('/user')
+                            .then((res) => console.log(res.data))
+                            .catch((err) => console.log(err))
+                    }
+                }, 100)
+            } else {
+                console.error('Failed to open popup window.')
+            }
+        })
+        .catch((err) => console.log(err))
+}
+
+const Header = ({
+    currentPage,
+    setCurrentPage,
+    pageNames,
+    signedIn,
+    setSignedIn,
+}: Props) => {
     const handleItemClick = (key: string) => {
         setCurrentPage(key)
-    }
-
-    // const signInBtnClick = () => {
-    //     apiClient
-    //         .get<string>('/login')
-    //         .then((res) => setUrl(res.data))
-    //         .catch((err) => setError(err.message))
-    //     console.log(url)
-    //     console.log(error)
-    //     window.open(url, 'Spotify Login', 'popup')
-    // }
-
-    const signInBtnClick = () => {
-        apiClient
-            .get<string>('/login')
-            .then((res) => {
-                const url = res.data
-                const authWindow = window.open(url, 'Spotify Login', 'popup')
-
-                if (authWindow) {
-                    //event listener to check if the popup window is closed
-                    const checkAuthWindowClosed = setInterval(() => {
-                        if (authWindow.closed) {
-                            clearInterval(checkAuthWindowClosed)
-                            console.log('window closed BOOOM')
-                        }
-                    }, 100)
-                } else {
-                    console.error('Failed to open popup window.')
-                }
-            })
-            .catch((err) => setError(err.message))
     }
 
     return (
         <Navbar shouldHideOnScroll>
             <NavbarBrand>
                 <ThemeSwitch></ThemeSwitch>
-                <button
-                    className="text-3xl pl-2"
-                    onClick={() => handleItemClick('Home')}
+                <Button
+                    className="text-3xl pl-2 bg-transparent "
+                    disableRipple
+                    onPress={() => handleItemClick('Home')}
                 >
                     Spanner
-                </button>
+                </Button>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 {pageNames.slice(1).map((item) => (
@@ -77,13 +82,13 @@ const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
                                 ? 'text-green-500'
                                 : 'text-default-800 border-default-300 hover:text-gray-400'
                         } `}
-                        onClick={() => handleItemClick(item)}
+                        onPress={() => handleItemClick(item)}
                     >
                         {item}
                     </Button>
                 ))}
             </NavbarContent>
-            <NavbarContent justify="end">
+            <NavbarContent justify="start">
                 <NavbarItem>
                     <Button
                         as={Link}
@@ -91,9 +96,15 @@ const Header = ({ currentPage, setCurrentPage, pageNames }: Props) => {
                         href="#"
                         variant="bordered"
                         radius="full"
-                        onPress={signInBtnClick}
+                        onPress={() => signInBtnClick(setSignedIn)}
                     >
-                        Sign In With Spotify
+                        {signedIn ? (
+                            <>
+                                <UserIcon color="primary" /> <p>Account</p>
+                            </>
+                        ) : (
+                            'Sign In With Spotify'
+                        )}
                     </Button>
                 </NavbarItem>
             </NavbarContent>
