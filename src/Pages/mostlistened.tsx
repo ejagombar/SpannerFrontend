@@ -11,33 +11,24 @@ const myGridItemData: GridItemData = {
     description: 'Salma is poopy',
 }
 
-interface Tracks {
-    ranking: number
+interface Track {
+    id: string
     name: string
     artist: string
-}
-
-// interface Artists {
-//     ranking: number
-//     name: string
-// }
-
-interface FetchTopTracks {
-    count: number
-    tracks: Tracks[]
+    imageUrl: string
 }
 
 const MostListened = () => {
     const [source, setSource] = React.useState('tracks')
     const [track, setTrack] = React.useState('short')
 
-    const [tracks, setTracks] = React.useState<Tracks[]>([])
+    const [tracks, setTracks] = React.useState<Track[]>([])
     const [error, setError] = React.useState('')
 
     useEffect(() => {
         apiClient
-            .get<FetchTopTracks>('/top')
-            .then((res) => setTracks(res.data.tracks))
+            .get<Track[]>('/tracks')
+            .then((res) => setTracks(res.data))
             .catch((err) => setError(err.message))
     })
 
@@ -80,7 +71,7 @@ const MostListened = () => {
                             name={track.name}
                             description={track.artist}
                             ranking={Number(index)}
-                            imageSrc=""
+                            imageSrc={track.imageUrl}
                         ></GridItem>
                     ))}
                 </div>
