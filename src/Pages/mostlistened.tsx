@@ -2,6 +2,8 @@ import { Card, Divider, Radio, RadioGroup } from '@nextui-org/react'
 import React, { useEffect } from 'react'
 import { GridItem, GridItemData } from '../components/gridItem'
 import apiClient from '../services/apiClient'
+import { Cancel } from '@mui/icons-material'
+import { CanceledError } from 'axios'
 
 const myGridItemData: GridItemData = {
     ranking: 1,
@@ -20,17 +22,31 @@ interface Track {
 
 const MostListened = () => {
     const [source, setSource] = React.useState('tracks')
-    const [track, setTrack] = React.useState('short')
+    const [timerange, setTimerange] = React.useState('short_term')
 
     const [tracks, setTracks] = React.useState<Track[]>([])
     const [error, setError] = React.useState('')
 
     useEffect(() => {
+        const controller = new AbortController()
+        const endpoint = '/api/profile/toptracks/' + timerange
+
         apiClient
-            .get<Track[]>('/tracks')
-            .then((res) => setTracks(res.data))
-            .catch((err) => setError(err.message))
-    })
+            .get<Track[]>(endpoint, {
+                signal: controller.signal,
+            })
+            .then((res) => {
+                setTracks(res.data)
+                setError('')
+                console.log('request')
+            })
+            .catch((err) => {
+                if (err instanceof CanceledError) return
+                setError(err.message)
+            })
+
+        return () => controller.abort()
+    }, [source, timerange])
 
     return (
         <div className="flex flex-col items-center">
@@ -51,13 +67,13 @@ const MostListened = () => {
 
                     <Card className="p-4 ml-2">
                         <RadioGroup
-                            value={track}
-                            onValueChange={setTrack}
+                            value={timerange}
+                            onValueChange={setTimerange}
                             orientation="horizontal"
                         >
-                            <Radio value="short">Last 4 Weeks</Radio>
-                            <Radio value="medium">Last 6 Months</Radio>
-                            <Radio value="long">All Time</Radio>
+                            <Radio value="short_term">Last 4 Weeks</Radio>
+                            <Radio value="medium_term">Last 6 Months</Radio>
+                            <Radio value="long_term">All Time</Radio>
                         </RadioGroup>
                     </Card>
                 </div>

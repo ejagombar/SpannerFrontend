@@ -6,7 +6,7 @@ import {
     NavbarItem,
     Link,
 } from '@nextui-org/react'
-import { Key, useState } from 'react'
+import { Key } from 'react'
 import ThemeSwitch from './themeswitch'
 import apiClient from '../services/apiClient'
 import { UserIcon } from './icons'
@@ -23,7 +23,7 @@ const signInBtnClick = (
     setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
     apiClient
-        .get<string>('/login')
+        .get<string>('/api/account/login')
         .then((res) => {
             const url = res.data
             const authWindow = window.open(url, 'Spotify Login', 'popup')
