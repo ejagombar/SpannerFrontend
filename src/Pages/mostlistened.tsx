@@ -5,14 +5,6 @@ import apiClient from '../services/apiClient'
 import { Cancel } from '@mui/icons-material'
 import { CanceledError } from 'axios'
 
-const myGridItemData: GridItemData = {
-    ranking: 1,
-    imageSrc:
-        'https://i.scdn.co/image/ab67706c0000da842843307bd27067924fc05cbe',
-    name: 'Salma Poopy',
-    description: 'Salma is poopy',
-}
-
 interface Track {
     id: string
     name: string
@@ -25,25 +17,44 @@ const MostListened = () => {
     const [timerange, setTimerange] = React.useState('short_term')
 
     const [tracks, setTracks] = React.useState<Track[]>([])
+    const [artsist, setArtists] = React.useState<Track[]>([])
     const [error, setError] = React.useState('')
 
     useEffect(() => {
         const controller = new AbortController()
-        const endpoint = '/api/profile/toptracks/' + timerange
 
-        apiClient
-            .get<Track[]>(endpoint, {
-                signal: controller.signal,
-            })
-            .then((res) => {
-                setTracks(res.data)
-                setError('')
-                console.log('request')
-            })
-            .catch((err) => {
-                if (err instanceof CanceledError) return
-                setError(err.message)
-            })
+        if (source === 'tracks') {
+            const endpoint = '/api/profile/toptracks/' + timerange
+
+            apiClient
+                .get<Track[]>(endpoint, {
+                    signal: controller.signal,
+                })
+                .then((res) => {
+                    setTracks(res.data)
+                    setError('')
+                    console.log('request')
+                })
+                .catch((err) => {
+                    if (err instanceof CanceledError) return
+                    setError(err.message)
+                })
+        } else {
+            const endpoint = '/api/profile/topartists/' + timerange
+            apiClient
+                .get<Track[]>(endpoint, {
+                    signal: controller.signal,
+                })
+                .then((res) => {
+                    setTracks(res.data)
+                    setError('')
+                    console.log('request')
+                })
+                .catch((err) => {
+                    if (err instanceof CanceledError) return
+                    setError(err.message)
+                })
+        }
 
         return () => controller.abort()
     }, [source, timerange])
@@ -86,8 +97,11 @@ const MostListened = () => {
                         <GridItem
                             name={track.name}
                             description={track.artist}
-                            ranking={Number(index)}
+                            ranking={Number(index) + 1}
                             imageSrc={track.imageUrl}
+                            key={Number(index) + 1}
+                            // showDescription={source === 'tracks'}
+                            showDescription={true}
                         ></GridItem>
                     ))}
                 </div>
