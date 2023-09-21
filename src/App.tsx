@@ -57,7 +57,7 @@ function App() {
 
             break
         case 'Playlist Comparison':
-            content = <p>hest</p>
+            content = <p>Coming Soon</p>
             break
         case 'Most Listened':
             content = <MostListened />

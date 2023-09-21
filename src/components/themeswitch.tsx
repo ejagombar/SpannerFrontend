@@ -15,7 +15,7 @@ const ThemeSwitch = () => {
     return (
         <div>
             <SpannerLogo
-                onPress={() => {
+                onClick={() => {
                     theme === 'dark' ? setTheme('light') : setTheme('dark')
                 }}
                 size={35}
