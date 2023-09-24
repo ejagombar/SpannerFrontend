@@ -10,6 +10,7 @@ import { Key } from 'react'
 import ThemeSwitch from './themeswitch'
 import apiClient from '../services/apiClient'
 import { UserIcon } from './icons'
+import { authenticatedStatus } from '../services/apiFunctions'
 
 interface Props {
     currentPage: Key
@@ -33,12 +34,6 @@ const signInBtnClick = (
                 const checkAuthWindowClosed = setInterval(() => {
                     if (authWindow.closed) {
                         clearInterval(checkAuthWindowClosed)
-                        setSignedIn(true)
-
-                        apiClient
-                            .get<string>('/user')
-                            .then((res) => console.log(res.data))
-                            .catch((err) => console.log(err))
                     }
                 }, 100)
             } else {
@@ -58,6 +53,9 @@ const Header = ({
     const handleItemClick = (key: string) => {
         setCurrentPage(key)
     }
+
+    console.log('signedIN:')
+    console.log(signedIn)
 
     return (
         <Navbar shouldHideOnScroll>

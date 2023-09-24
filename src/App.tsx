@@ -7,6 +7,8 @@ import { useState } from 'react'
 import { Key } from 'react'
 import Home from './Pages/home.tsx'
 import MostListened from './Pages/mostlistened.tsx'
+import { useEffect } from 'react'
+import { authenticatedStatus } from './services/apiFunctions.ts'
 
 const playlistData: PlaylistInfo = {
     name: 'Waitrose Essentials',
@@ -36,6 +38,11 @@ function App() {
         setSelected(key)
         console.log(key)
     }
+
+    useEffect(() => {
+        setSignedIn(authenticatedStatus())
+        console.log(signedIn)
+    }, [])
 
     let content: JSX.Element
 
@@ -72,8 +79,8 @@ function App() {
             <div className="flex-grow">
                 <Header
                     pageNames={pageNames}
-                    setSignedIn={setSignedIn}
                     signedIn={signedIn}
+                    setSignedIn={setSignedIn}
                     setCurrentPage={handleSelectionChange}
                     currentPage={selected}
                 ></Header>

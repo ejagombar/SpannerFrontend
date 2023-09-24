@@ -1,14 +1,19 @@
 import apiClient from '../services/apiClient'
 
-async function authenticatedStatus(): Promise<boolean> {
+export async function authenticatedStatus(): Promise<boolean> {
     try {
-        apiClient.get('/api/account/authenticated').then((res) => {
-            if (res.status == 200) {
-                return true
-            }
-        })
-    } catch (err) {
-        console.log(err)
+        const response = await apiClient.get<string>(
+            '/api/account/authenticated'
+        )
+
+        if (response.data === 'true') {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        // Handle any errors that may occur during the request
+        console.error('Error:', error)
+        return false // Return false on error
     }
-    return false
 }
