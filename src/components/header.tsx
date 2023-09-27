@@ -34,6 +34,7 @@ const signInBtnClick = (
                 const checkAuthWindowClosed = setInterval(() => {
                     if (authWindow.closed) {
                         clearInterval(checkAuthWindowClosed)
+                        setSignedIn(true)
                     }
                 }, 100)
             } else {
@@ -53,9 +54,6 @@ const Header = ({
     const handleItemClick = (key: string) => {
         setCurrentPage(key)
     }
-
-    console.log('signedIN:')
-    console.log(signedIn)
 
     return (
         <Navbar shouldHideOnScroll>

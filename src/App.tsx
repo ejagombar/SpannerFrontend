@@ -8,7 +8,7 @@ import { Key } from 'react'
 import Home from './Pages/home.tsx'
 import MostListened from './Pages/mostlistened.tsx'
 import { useEffect } from 'react'
-import { authenticatedStatus } from './services/apiFunctions.ts'
+import apiClient from './services/apiClient.ts'
 
 const playlistData: PlaylistInfo = {
     name: 'Waitrose Essentials',
@@ -40,9 +40,25 @@ function App() {
     }
 
     useEffect(() => {
-        setSignedIn(authenticatedStatus())
-        console.log(signedIn)
+        apiClient
+            .get<string>('/api/account/authenticated')
+            .then((response) => {
+                if (response.data.toString() === 'true') {
+                    setSignedIn(true)
+                } else {
+                    setSignedIn(false)
+                }
+                console.log('response:', signedIn)
+            })
+            .catch((error) => {
+                console.error('Error fetching variable state:', error)
+                setSignedIn(false)
+            })
     }, [])
+
+    useEffect(() => {
+        console.log('Alert: signedIn:', signedIn)
+    }, [signedIn])
 
     let content: JSX.Element
 
