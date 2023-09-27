@@ -6,7 +6,7 @@ import { PlaylistInfo } from './interfaces.tsx'
 import { useState } from 'react'
 import { Key } from 'react'
 import Home from './Pages/home.tsx'
-import MostListened from './Pages/mostlistened.tsx'
+import MostListened, { MostListenedData } from './Pages/mostlistened.tsx'
 import { useEffect } from 'react'
 import apiClient from './services/apiClient.ts'
 import AccountPage, { UserInfo } from './Pages/account.tsx'
@@ -39,6 +39,15 @@ function App() {
         displayname: '',
         followercount: '',
         imageurl: '',
+    })
+
+    const [mostListenedData, setMostListenedData] = useState<MostListenedData>({
+        shortTermTracks: [],
+        longTermTracks: [],
+        mediumTermTracks: [],
+        shortTermArtists: [],
+        mediumTermArtists: [],
+        longTermArtists: [],
     })
 
     const handleSelectionChange = (key: Key) => {
@@ -96,7 +105,12 @@ function App() {
             content = <p>Coming Soon</p>
             break
         case 'Most Listened':
-            content = <MostListened />
+            content = (
+                <MostListened
+                    mostListenedData={mostListenedData}
+                    setMostListenedData={setMostListenedData}
+                />
+            )
             break
         case 'Account':
             content = (

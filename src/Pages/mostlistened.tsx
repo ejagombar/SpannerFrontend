@@ -1,8 +1,7 @@
 import { Card, Divider, Radio, RadioGroup } from '@nextui-org/react'
 import React, { useEffect } from 'react'
-import { GridItem, GridItemData } from '../components/gridItem'
+import { ArtistGridItem, TrackGridItem } from '../components/gridItem'
 import apiClient from '../services/apiClient'
-import { Cancel } from '@mui/icons-material'
 import { CanceledError } from 'axios'
 
 interface Track {
@@ -12,12 +11,31 @@ interface Track {
     imageUrl: string
 }
 
-const MostListened = () => {
+interface Artist {
+    id: string
+    name: string
+    imageUrl: string
+}
+
+export interface MostListenedData {
+    shortTermTracks: Track[]
+    mediumTermTracks: Track[]
+    longTermTracks: Track[]
+    shortTermArtists: Artist[]
+    mediumTermArtists: Artist[]
+    longTermArtists: Artist[]
+}
+
+interface Props {
+    mostListenedData: MostListenedData
+    setMostListenedData: React.Dispatch<React.SetStateAction<MostListenedData>>
+}
+
+const MostListened = ({ mostListenedData, setMostListenedData }: Props) => {
     const [source, setSource] = React.useState('tracks')
     const [timerange, setTimerange] = React.useState('short_term')
-
-    const [tracks, setTracks] = React.useState<Track[]>([])
-    const [artsist, setArtists] = React.useState<Track[]>([])
+    const [currentTracks, setCurrentTracks] = React.useState<Track[]>([])
+    const [currentArtists, setCurrentArtists] = React.useState<Artist[]>([])
     const [error, setError] = React.useState('')
 
     useEffect(() => {
@@ -25,15 +43,44 @@ const MostListened = () => {
 
         if (source === 'tracks') {
             const endpoint = '/api/profile/toptracks/' + timerange
+            if (
+                (timerange === 'short_term' &&
+                    mostListenedData.shortTermTracks.length !== 0) ||
+                (timerange === 'medium_term' &&
+                    mostListenedData.mediumTermTracks.length !== 0) ||
+                (timerange === 'long_term' &&
+                    mostListenedData.longTermTracks.length !== 0)
+            ) {
+                return
+            }
 
             apiClient
                 .get<Track[]>(endpoint, {
                     signal: controller.signal,
                 })
                 .then((res) => {
-                    setTracks(res.data)
+                    switch (timerange) {
+                        case 'short_term':
+                            setMostListenedData((mostListenedData) => ({
+                                ...mostListenedData,
+                                shortTermTracks: res.data,
+                            }))
+                            break
+                        case 'medium_term':
+                            setMostListenedData((mostListenedData) => ({
+                                ...mostListenedData,
+                                mediumTermTracks: res.data,
+                            }))
+                            break
+                        case 'long_term':
+                            setMostListenedData((mostListenedData) => ({
+                                ...mostListenedData,
+                                longTermTracks: res.data,
+                            }))
+                            break
+                    }
                     setError('')
-                    console.log('request')
+                    console.log(timerange, 'track request')
                 })
                 .catch((err) => {
                     if (err instanceof CanceledError) return
@@ -41,20 +88,68 @@ const MostListened = () => {
                 })
         } else {
             const endpoint = '/api/profile/topartists/' + timerange
+
+            if (
+                (timerange === 'short_term' &&
+                    mostListenedData.shortTermArtists.length !== 0) ||
+                (timerange === 'medium_term' &&
+                    mostListenedData.mediumTermArtists.length !== 0) ||
+                (timerange === 'long_term' &&
+                    mostListenedData.longTermArtists.length !== 0)
+            ) {
+                return
+            }
+
             apiClient
-                .get<Track[]>(endpoint, {
+                .get<Artist[]>(endpoint, {
                     signal: controller.signal,
                 })
                 .then((res) => {
-                    setTracks(res.data)
+                    switch (timerange) {
+                        case 'short_term':
+                            setMostListenedData((mostListenedData) => ({
+                                ...mostListenedData,
+                                shortTermArtists: res.data,
+                            }))
+                            break
+                        case 'medium_term':
+                            setMostListenedData((mostListenedData) => ({
+                                ...mostListenedData,
+                                mediumTermArtists: res.data,
+                            }))
+                            break
+                        case 'long_term':
+                            setMostListenedData((mostListenedData) => ({
+                                ...mostListenedData,
+                                longTermArtists: res.data,
+                            }))
+                            break
+                    }
                     setError('')
-                    console.log('request')
+                    console.log(timerange, 'artist request')
                 })
                 .catch((err) => {
                     if (err instanceof CanceledError) return
                     setError(err.message)
                 })
         }
+
+        // if (source === 'tracks') {
+        //     if (timerange === 'short_term')
+        //         setCurrentTracks(mostListenedData.shortTermTracks)
+        //     if (timerange === 'medium_term')
+        //         setCurrentTracks(mostListenedData.mediumTermTracks)
+        //     if (timerange === 'long_term')
+        //         setCurrentTracks(mostListenedData.longTermTracks)
+        // } else if (source === 'artists') {
+        //     if (timerange === 'short_term')
+        //         setCurrentArtists(mostListenedData.shortTermArtists)
+        //     if (timerange === 'medium_term')
+        //         setCurrentArtists(mostListenedData.mediumTermArtists)
+        //     if (timerange === 'long_term')
+        //         setCurrentArtists(mostListenedData.longTermArtists)
+        // }
+        // console.log(mostListenedData.shortTermArtists)
 
         return () => controller.abort()
     }, [source, timerange])
@@ -93,17 +188,75 @@ const MostListened = () => {
 
                 {error && <p className="text-warning pt-5 text-xl">{error}</p>}
                 <div className="grid grid-cols-5 gap-4 mt-4">
-                    {tracks.map((track, index) => (
-                        <GridItem
-                            name={track.name}
-                            description={track.artist}
-                            ranking={Number(index) + 1}
-                            imageSrc={track.imageUrl}
-                            key={Number(index) + 1}
-                            // showDescription={source === 'tracks'}
-                            showDescription={true}
-                        ></GridItem>
-                    ))}
+                    {source === 'tracks' &&
+                        timerange === 'short_term' &&
+                        mostListenedData.shortTermTracks.map((track, index) => (
+                            <TrackGridItem
+                                name={track.name}
+                                artist={track.artist}
+                                ranking={Number(index) + 1}
+                                imageSrc={track.imageUrl}
+                                key={Number(index) + 1}
+                            ></TrackGridItem>
+                        ))}
+                    {source === 'tracks' &&
+                        timerange === 'medium_term' &&
+                        mostListenedData.mediumTermTracks.map(
+                            (track, index) => (
+                                <TrackGridItem
+                                    name={track.name}
+                                    artist={track.artist}
+                                    ranking={Number(index) + 1}
+                                    imageSrc={track.imageUrl}
+                                    key={Number(index) + 1}
+                                ></TrackGridItem>
+                            )
+                        )}
+                    {source === 'tracks' &&
+                        timerange === 'long_term' &&
+                        mostListenedData.longTermTracks.map((track, index) => (
+                            <TrackGridItem
+                                name={track.name}
+                                artist={track.artist}
+                                ranking={Number(index) + 1}
+                                imageSrc={track.imageUrl}
+                                key={Number(index) + 1}
+                            ></TrackGridItem>
+                        ))}
+                    {source === 'artists' &&
+                        timerange === 'short_term' &&
+                        mostListenedData.shortTermArtists.map(
+                            (track, index) => (
+                                <ArtistGridItem
+                                    name={track.name}
+                                    ranking={Number(index) + 1}
+                                    imageSrc={track.imageUrl}
+                                    key={Number(index) + 1}
+                                ></ArtistGridItem>
+                            )
+                        )}
+                    {source === 'artists' &&
+                        timerange === 'medium_term' &&
+                        mostListenedData.mediumTermArtists.map(
+                            (track, index) => (
+                                <ArtistGridItem
+                                    name={track.name}
+                                    ranking={Number(index) + 1}
+                                    imageSrc={track.imageUrl}
+                                    key={Number(index) + 1}
+                                ></ArtistGridItem>
+                            )
+                        )}
+                    {source === 'artists' &&
+                        timerange === 'long_term' &&
+                        mostListenedData.longTermArtists.map((track, index) => (
+                            <ArtistGridItem
+                                name={track.name}
+                                ranking={Number(index) + 1}
+                                imageSrc={track.imageUrl}
+                                key={Number(index) + 1}
+                            ></ArtistGridItem>
+                        ))}
                 </div>
             </div>
         </div>
