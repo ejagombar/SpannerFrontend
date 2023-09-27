@@ -1,8 +1,16 @@
 import { Button, Link } from '@nextui-org/react'
 
+import { Key } from 'react'
 import { SpannerLogo } from '../components/icons'
+import { accountBtnClick, signInBtnClick } from '../components/accountFuncs'
 
-const Home: React.FC<{ signedIn: boolean }> = ({ signedIn }) => {
+interface Props {
+    setCurrentPage: (currentPage: Key) => void
+    signedIn: boolean
+    setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Home = ({ setCurrentPage, signedIn, setSignedIn }: Props) => {
     const lineStyle = {
         height: '1370px',
     }
@@ -51,6 +59,11 @@ const Home: React.FC<{ signedIn: boolean }> = ({ signedIn }) => {
                                 variant="bordered"
                                 radius="full"
                                 className="mb-16 pt-6 pb-6"
+                                onPress={() => {
+                                    signedIn
+                                        ? accountBtnClick(setCurrentPage)
+                                        : signInBtnClick(setSignedIn)
+                                }}
                             >
                                 <p className="text-2xl align-middle text-primary">
                                     {signedIn

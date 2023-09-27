@@ -11,31 +11,39 @@ import {
     ModalHeader,
     ModalFooter,
 } from '@nextui-org/react'
+import { CanceledError } from 'axios'
 
-interface UserInfo {
+export interface UserInfo {
     displayname: string
     followercount: string
     imageurl: string
 }
 
-interface Props {
+interface SignOutBtnProps {
     setSelected: (currentPage: Key) => void
     setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
-const AccountPage = ({ setSelected, setSignedIn }: Props) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const [userInfo, setUserInfo] = useState<UserInfo>({
-        displayname: '',
-        followercount: '',
-        imageurl: '',
-    })
+interface Props {
+    setSelected: (currentPage: Key) => void
+    setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
+    userInfo: UserInfo
+    setUserInfo: (userInfo: UserInfo) => void
+}
+
+const AccountPage = ({
+    setSelected,
+    setSignedIn,
+    userInfo,
+    setUserInfo,
+}: Props) => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const ConfirmSignOutBtn = () => {
         onOpen()
     }
 
-    const signOutBtn = ({ setSelected, setSignedIn }: Props) => {
+    const signOutBtn = ({ setSelected, setSignedIn }: SignOutBtnProps) => {
         console.log('Signed Out')
         apiClient.post<string>('/api/account/logout')
         onClose()
@@ -53,10 +61,10 @@ const AccountPage = ({ setSelected, setSignedIn }: Props) => {
                 })
                 .then((res) => {
                     setUserInfo(res.data)
-                    console.log('requested name')
-                    console.log(res.data)
+                    console.log('requested data')
                 })
                 .catch((err) => {
+                    if (err instanceof CanceledError) return
                     console.log(err)
                 })
         }
@@ -71,26 +79,26 @@ const AccountPage = ({ setSelected, setSignedIn }: Props) => {
                     <p className="text-6xl pb-8">My Account</p>
                     <Divider></Divider>
                     <div className="flex flex-col justify-center pt-2 pb-2">
-                            <div className="flex flex-col w-full justify-center items-center p-5">
-                                    <Image
-                                        width={200}
-                                        height={200}
-                                        alt="Profile Picture"
-                                        src={userInfo.imageurl}
-                                    />
-                                <p className="text-2xl p-5">
-                                    {userInfo.displayname}
-                                </p>
-                                <p>{userInfo.followercount} Followers</p>
-                            </div>
-                            <Button
-                                className="ml-10 mr-10 mb-5"
-                                variant="bordered"
-                                color="danger"
-                                onPress={ConfirmSignOutBtn}
-                            >
-                                Sign Out
-                            </Button>
+                        <div className="flex flex-col w-full justify-center items-center p-5">
+                            <Image
+                                width={200}
+                                height={200}
+                                alt="Profile Picture"
+                                src={userInfo.imageurl}
+                            />
+                            <p className="text-2xl p-5">
+                                {userInfo.displayname}
+                            </p>
+                            <p>{userInfo.followercount} Followers</p>
+                        </div>
+                        <Button
+                            className="ml-10 mr-10 mb-5"
+                            variant="bordered"
+                            color="danger"
+                            onPress={ConfirmSignOutBtn}
+                        >
+                            Sign Out
+                        </Button>
                     </div>
                 </div>
             </div>
