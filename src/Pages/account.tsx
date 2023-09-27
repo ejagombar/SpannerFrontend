@@ -1,4 +1,4 @@
-import { Key } from 'react'
+import { Key, useEffect, useState } from 'react'
 import apiClient from '../services/apiClient'
 import {
     Card,
@@ -12,12 +12,24 @@ import {
     ModalFooter,
 } from '@nextui-org/react'
 
+interface UserInfo {
+    displayname: string
+    followercount: string
+    imageurl: string
+}
+
 interface Props {
     setSelected: (currentPage: Key) => void
     setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 const AccountPage = ({ setSelected, setSignedIn }: Props) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const [userInfo, setUserInfo] = useState<UserInfo>({
+        displayname: '',
+        followercount: '',
+        imageurl: '',
+    })
 
     const ConfirmSignOutBtn = () => {
         onOpen()
@@ -31,6 +43,27 @@ const AccountPage = ({ setSelected, setSignedIn }: Props) => {
         setSelected('Home')
     }
 
+    useEffect(() => {
+        const controller = new AbortController()
+
+        if (userInfo.displayname === '') {
+            apiClient
+                .get<UserInfo>('/api/profile/info', {
+                    signal: controller.signal,
+                })
+                .then((res) => {
+                    setUserInfo(res.data)
+                    console.log('requested name')
+                    console.log(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+
+        return () => controller.abort()
+    }, [])
+
     return (
         <>
             <div className="flex flex-col items-center">
@@ -38,25 +71,26 @@ const AccountPage = ({ setSelected, setSignedIn }: Props) => {
                     <p className="text-6xl pb-8">My Account</p>
                     <Divider></Divider>
                     <div className="flex flex-col justify-center pt-2 pb-2">
-                        <Card className="mb-5">
-                            <div className="flex flex-col w-full justify-center items-center p-2">
-                                <Image
-                                    width={300}
-                                    alt="Profile Picture"
-                                    src="https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                                />
-                                <p className="pt-2 text-2xl">Ed Agombar</p>
-                                <p>23 Followers</p>
+                            <div className="flex flex-col w-full justify-center items-center p-5">
+                                    <Image
+                                        width={200}
+                                        height={200}
+                                        alt="Profile Picture"
+                                        src={userInfo.imageurl}
+                                    />
+                                <p className="text-2xl p-5">
+                                    {userInfo.displayname}
+                                </p>
+                                <p>{userInfo.followercount} Followers</p>
                             </div>
-                        </Card>
-                        <Button
-                            className="ml-10 mr-10"
-                            variant="bordered"
-                            color="danger"
-                            onPress={ConfirmSignOutBtn}
-                        >
-                            Sign Out
-                        </Button>
+                            <Button
+                                className="ml-10 mr-10 mb-5"
+                                variant="bordered"
+                                color="danger"
+                                onPress={ConfirmSignOutBtn}
+                            >
+                                Sign Out
+                            </Button>
                     </div>
                 </div>
             </div>
