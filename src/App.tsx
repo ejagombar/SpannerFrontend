@@ -87,7 +87,12 @@ function App() {
             content = <MostListened />
             break
         case 'Account':
-            content = <AccountPage />
+            content = (
+                <AccountPage
+                    setSignedIn={setSignedIn}
+                    setSelected={setSelected}
+                />
+            )
             break
         default:
             content = <p>Error. How did we get here?</p>

@@ -10,7 +10,6 @@ import { Key } from 'react'
 import ThemeSwitch from './themeswitch'
 import apiClient from '../services/apiClient'
 import { UserIcon } from './icons'
-import { authenticatedStatus } from '../services/apiFunctions'
 
 interface Props {
     currentPage: Key
