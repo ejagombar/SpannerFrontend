@@ -44,6 +44,10 @@ const signInBtnClick = (
         .catch((err) => console.log(err))
 }
 
+const accountBtnClick = (setCurrentPage: (currentPage: Key) => void) => {
+    setCurrentPage('Account')
+}
+
 const Header = ({
     currentPage,
     setCurrentPage,
@@ -92,7 +96,11 @@ const Header = ({
                         href="#"
                         variant="bordered"
                         radius="full"
-                        onPress={() => signInBtnClick(setSignedIn)}
+                        onPress={() => {
+                            signedIn
+                                ? accountBtnClick(setCurrentPage)
+                                : signInBtnClick(setSignedIn)
+                        }}
                     >
                         {signedIn ? (
                             <>

@@ -9,6 +9,7 @@ import Home from './Pages/home.tsx'
 import MostListened from './Pages/mostlistened.tsx'
 import { useEffect } from 'react'
 import apiClient from './services/apiClient.ts'
+import AccountPage from './Pages/account.tsx'
 
 const playlistData: PlaylistInfo = {
     name: 'Waitrose Essentials',
@@ -84,6 +85,9 @@ function App() {
             break
         case 'Most Listened':
             content = <MostListened />
+            break
+        case 'Account':
+            content = <AccountPage />
             break
         default:
             content = <p>Error. How did we get here?</p>
