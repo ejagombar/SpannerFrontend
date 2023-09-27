@@ -2,7 +2,7 @@ import { Button, Link } from '@nextui-org/react'
 
 import { SpannerLogo } from '../components/icons'
 
-const Home = () => {
+const Home: React.FC<{ signedIn: boolean }> = ({ signedIn }) => {
     const lineStyle = {
         height: '1370px',
     }
@@ -53,7 +53,9 @@ const Home = () => {
                                 className="mb-16 pt-6 pb-6"
                             >
                                 <p className="text-2xl align-middle text-primary">
-                                    Sign In With Spotify
+                                    {signedIn
+                                        ? 'My Account'
+                                        : 'Sign In With Spotify'}
                                 </p>
                             </Button>
 

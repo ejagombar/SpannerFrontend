@@ -65,7 +65,7 @@ function App() {
 
     switch (selected) {
         case 'Home':
-            content = <Home />
+            content = <Home signedIn={signedIn} />
             break
         case 'Playlist Analysis':
             content = (
