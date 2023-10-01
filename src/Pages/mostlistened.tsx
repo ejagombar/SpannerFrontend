@@ -34,8 +34,6 @@ interface Props {
 const MostListened = ({ mostListenedData, setMostListenedData }: Props) => {
     const [source, setSource] = React.useState('tracks')
     const [timerange, setTimerange] = React.useState('short_term')
-    const [currentTracks, setCurrentTracks] = React.useState<Track[]>([])
-    const [currentArtists, setCurrentArtists] = React.useState<Artist[]>([])
     const [error, setError] = React.useState('')
 
     useEffect(() => {
@@ -133,23 +131,6 @@ const MostListened = ({ mostListenedData, setMostListenedData }: Props) => {
                     setError(err.message)
                 })
         }
-
-        // if (source === 'tracks') {
-        //     if (timerange === 'short_term')
-        //         setCurrentTracks(mostListenedData.shortTermTracks)
-        //     if (timerange === 'medium_term')
-        //         setCurrentTracks(mostListenedData.mediumTermTracks)
-        //     if (timerange === 'long_term')
-        //         setCurrentTracks(mostListenedData.longTermTracks)
-        // } else if (source === 'artists') {
-        //     if (timerange === 'short_term')
-        //         setCurrentArtists(mostListenedData.shortTermArtists)
-        //     if (timerange === 'medium_term')
-        //         setCurrentArtists(mostListenedData.mediumTermArtists)
-        //     if (timerange === 'long_term')
-        //         setCurrentArtists(mostListenedData.longTermArtists)
-        // }
-        // console.log(mostListenedData.shortTermArtists)
 
         return () => controller.abort()
     }, [source, timerange])

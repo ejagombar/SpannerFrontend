@@ -10,6 +10,9 @@ import MostListened, { MostListenedData } from './Pages/mostlistened.tsx'
 import { useEffect } from 'react'
 import apiClient from './services/apiClient.ts'
 import AccountPage, { UserInfo } from './Pages/account.tsx'
+import PlaylistAnalysis, {
+    playlistMetadata,
+} from './Pages/playlistanalysis.tsx'
 
 const playlistData: PlaylistInfo = {
     name: 'Waitrose Essentials',
@@ -40,6 +43,8 @@ function App() {
         followercount: '',
         imageurl: '',
     })
+
+    const [userPlaylists, setUserPlaylists] = useState<playlistMetadata[]>([])
 
     const [mostListenedData, setMostListenedData] = useState<MostListenedData>({
         shortTermTracks: [],
@@ -90,13 +95,9 @@ function App() {
             break
         case 'Playlist Analysis':
             content = (
-                <PlaylistCard
-                    name={playlistData.name}
-                    description={playlistData.description}
-                    imageLink={playlistData.imageLink}
-                    followers={playlistData.followers}
-                    trackCount={playlistData.trackCount}
-                    metrics={playlistData.metrics}
+                <PlaylistAnalysis
+                    userPlaylists={userPlaylists}
+                    setUserPlaylists={setUserPlaylists}
                 />
             )
 

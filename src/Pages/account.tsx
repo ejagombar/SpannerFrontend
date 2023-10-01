@@ -76,8 +76,7 @@ const AccountPage = ({
         <>
             <div className="flex flex-col items-center">
                 <div className="flex flex-col items-center pt-20 mb-10 max-w-1/2 ">
-                    <p className="text-6xl pb-8">My Account</p>
-                    <Divider></Divider>
+                    <p className="text-6xl">{userInfo.displayname}</p>
                     <div className="flex flex-col justify-center pt-2 pb-2">
                         <div className="flex flex-col w-full justify-center items-center p-5">
                             <Image
@@ -86,10 +85,7 @@ const AccountPage = ({
                                 alt="Profile Picture"
                                 src={userInfo.imageurl}
                             />
-                            <p className="text-2xl p-5">
-                                {userInfo.displayname}
-                            </p>
-                            <p>{userInfo.followercount} Followers</p>
+                            <p className='pt-5'>{userInfo.followercount} Followers</p>
                         </div>
                         <Button
                             className="ml-10 mr-10 mb-5"

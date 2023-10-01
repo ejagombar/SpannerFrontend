@@ -19,7 +19,6 @@ interface Props {
     setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-
 const Header = ({
     currentPage,
     setCurrentPage,
@@ -49,7 +48,7 @@ const Header = ({
                         key={item}
                         radius="full"
                         variant="bordered"
-                        className={`text-xl ${
+                        className={`text-lg ${
                             currentPage === item
                                 ? 'text-green-500'
                                 : 'text-default-800 border-default-300 hover:text-gray-400'
