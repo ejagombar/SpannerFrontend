@@ -10,9 +10,8 @@ import MostListened, { MostListenedData } from './Pages/mostlistened.tsx'
 import { useEffect } from 'react'
 import apiClient from './services/apiClient.ts'
 import AccountPage, { UserInfo } from './Pages/account.tsx'
-import PlaylistAnalysis, {
-    playlistMetadata,
-} from './Pages/playlistanalysis.tsx'
+import PlaylistAnalysis from './Pages/playlistanalysis.tsx'
+import { playlistMetadata } from './components/playlistSelector.tsx'
 
 const playlistData: PlaylistInfo = {
     name: 'Waitrose Essentials',

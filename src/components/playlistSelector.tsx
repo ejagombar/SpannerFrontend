@@ -1,6 +1,8 @@
 import { Select, SelectItem, Avatar } from '@nextui-org/react'
+import { Key } from 'react'
 
 export interface playlistMetadata {
+    index: number
     id: string
     name: string
     description: string
@@ -9,17 +11,32 @@ export interface playlistMetadata {
 }
 
 interface Props {
+    className: string
     userPlaylists: playlistMetadata[]
+    setSelectedPlaylist: React.Dispatch<React.SetStateAction<string>>
 }
 
-const PlaylistSelector = ({ userPlaylists }: Props) => {
+const PlaylistSelector = ({
+    userPlaylists,
+    className,
+    setSelectedPlaylist,
+}: Props) => {
     return (
         <>
             <Select
                 items={userPlaylists}
                 label="Select Playlist"
-                className="max-w-xs"
+                className={className}
                 variant="bordered"
+                onSelectionChange={(keys) => {
+                    const anchorKey = Array.from(keys)[0]
+                    anchorKey === undefined
+                        ? setSelectedPlaylist('')
+                        : setSelectedPlaylist(String(anchorKey))
+                    anchorKey === undefined
+                        ? console.log('')
+                        : console.log(String(anchorKey))
+                }}
                 classNames={{
                     label: 'group-data-[filled=true]:-translate-y-5',
                     trigger: 'min-h-unit-16',

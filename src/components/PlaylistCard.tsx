@@ -16,7 +16,7 @@ const PlaylistCard = ({
                     <Image
                         width={200}
                         alt="NextUI hero Image"
-                        src="https://i.scdn.co/image/ab67706c0000da842843307bd27067924fc05cbe"
+                        src={imageLink}
                         radius="none"
                     />
                     <p className="text-3xl mt-2 mb-1">{name}</p>

@@ -9,5 +9,5 @@ export interface PlaylistInfo {
     imageLink: string
     followers: number
     trackCount: number
-    metrics: metric[]
+    metrics: Metric[]
 }
