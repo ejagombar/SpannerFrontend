@@ -1,21 +1,41 @@
 import { useEffect, useState } from 'react'
 import apiClient from '../services/apiClient'
 import { CanceledError } from 'axios'
-import PlaylistSelector, {
-    playlistMetadata,
-} from '../components/playlistSelector'
+import PlaylistSelector from '../components/playlistSelector'
 import { Button, Card } from '@nextui-org/react'
 import PlaylistCard from '../components/PlaylistCard'
+import { PlaylistAnalysisData } from '../interfaces'
 
 interface Props {
-    userPlaylists: playlistMetadata[]
-    setUserPlaylists: React.Dispatch<React.SetStateAction<playlistMetadata[]>>
+    userPlaylists: PlaylistAnalysisData[]
+    setUserPlaylists: React.Dispatch<
+        React.SetStateAction<PlaylistAnalysisData[]>
+    >
 }
 
 const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
     const [error, setError] = useState<string>('')
     const [selectedPlaylistId, setSelectedPlaylistId] = useState<string>('')
     const [playlistSelected, setPlaylistSelected] = useState<boolean>(false)
+    const [playlistAnalysis, setPlaylistAnalysis] =
+        useState<PlaylistAnalysisData>({
+            id: '',
+            name: '',
+            description: '',
+            imagelink: '',
+            followers: '',
+            trackcount: '',
+            topplaylisttracks: [],
+            audiofeatures: {
+                acousticness: '',
+                danceability: '',
+                energy: '',
+                instrumentalness: '',
+                valence: '',
+                tempo: '',
+                loudness: '',
+            },
+        })
 
     useEffect(() => {
         if (userPlaylists.length > 0) return
@@ -23,7 +43,7 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
         const controller = new AbortController()
 
         apiClient
-            .get<playlistMetadata[]>('/api/profile/userplaylists', {
+            .get<PlaylistAnalysisData[]>('/api/profile/userplaylists', {
                 signal: controller.signal,
             })
             .then((res) => {
@@ -45,14 +65,14 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
 
         const controller = new AbortController()
 
-        const endpoint = '/api/playlist/' + selectedPlaylistId + '/info'
+        const endpoint = '/api/playlist/' + selectedPlaylistId + '/analysis'
 
         apiClient
-            .get<playlistMetadata[]>(endpoint, {
+            .get<PlaylistAnalysisData>(endpoint, {
                 signal: controller.signal,
             })
             .then((res) => {
-                console.log(res.data)
+                setPlaylistAnalysis(res.data)
                 setError('')
             })
             .catch((err) => {
@@ -63,7 +83,7 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
 
         console.log(userPlaylists)
         return () => controller.abort()
-    }, [selectedPlaylistId])
+    }, [playlistSelected])
 
     if (!playlistSelected) {
         return (
@@ -116,7 +136,8 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
                             </Button>
                         </div>
                     </Card>
-                    <PlaylistCard name={'test'}></PlaylistCard>
+                    <p>{playlistAnalysis.name}</p>
+                    <p>{playlistAnalysis.description}</p>
                 </div>
             </>
         )

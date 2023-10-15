@@ -1,18 +1,10 @@
 import { Select, SelectItem, Avatar } from '@nextui-org/react'
-import { Key } from 'react'
+import { PlaylistAnalysisData } from '../interfaces'
 
-export interface playlistMetadata {
-    index: number
-    id: string
-    name: string
-    description: string
-    imagelink: string
-    trackcount: number
-}
 
 interface Props {
     className: string
-    userPlaylists: playlistMetadata[]
+    userPlaylists: PlaylistAnalysisData[]
     setSelectedPlaylist: React.Dispatch<React.SetStateAction<string>>
 }
 

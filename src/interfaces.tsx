@@ -1,13 +1,27 @@
-export interface Metric {
+interface Tracks {
+    id: string
     name: string
-    value: number
+    artist: string
+    imageurl: string
 }
 
-export interface PlaylistInfo {
+export interface AudioFeatures {
+    acousticness: string
+    danceability: string
+    energy: string
+    instrumentalness: string
+    valence: string
+    tempo: string
+    loudness: string
+}
+
+export interface PlaylistAnalysisData {
+    id: string
     name: string
     description: string
-    imageLink: string
-    followers: number
-    trackCount: number
-    metrics: Metric[]
+    imagelink: string
+    followers: string
+    trackcount: string
+    topplaylisttracks: Tracks[]
+    audiofeatures: AudioFeatures
 }
