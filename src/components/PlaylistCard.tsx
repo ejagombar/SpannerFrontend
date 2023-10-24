@@ -6,6 +6,7 @@ interface Props {
 }
 const PlaylistCard = ({ data }: Props) => {
     return (
+        <p>
             <div className="flex flex-col items-center justify-items-center mt-10 mb-26">
                 <Card className="max-w-[400px] p-5 flex flex-col justify-items-center items-center">
                     <Image
@@ -25,26 +26,21 @@ const PlaylistCard = ({ data }: Props) => {
                     <Divider></Divider>
 
                     <div className="flex flex-col w-full mt-3">
-                        <Progress
-                            aria-label={'Tempo'}
-                            value={parseFloat(data.audiofeatures.tempo)}
-                            className="max-w-md"
-                            size="md"
-                            label={'Tempo'}
-                            showValueLabel={true}
-                        />
-
-                        <Progress
-                            aria-label={'Danceability'}
-                            value={parseFloat(data.audiofeatures.danceability)}
-                            className="max-w-md"
-                            size="md"
-                            label={'Danceability'}
-                            showValueLabel={true}
-                        />
+                        {data.audiofeatures.map((feature, index) => (
+                            <Progress
+                                aria-label={feature.name}
+                                value={feature.value}
+                                className="max-w-md"
+                                size="md"
+                                label={feature.name}
+                                key={index}
+                                showValueLabel={true}
+                            />
+                        ))}
                     </div>
                 </Card>
             </div>
+        </p>
     )
 }
 

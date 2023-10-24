@@ -15,6 +15,11 @@ export interface AudioFeatures {
     loudness: string
 }
 
+export interface AudioFeature {
+    name: string
+    value: number
+}
+
 export interface PlaylistAnalysisData {
     id: string
     name: string
@@ -23,5 +28,5 @@ export interface PlaylistAnalysisData {
     followers: string
     trackcount: string
     topplaylisttracks: Tracks[]
-    audiofeatures: AudioFeatures
+    audiofeatures: AudioFeature[]
 }

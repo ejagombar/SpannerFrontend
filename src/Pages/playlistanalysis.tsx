@@ -17,6 +17,7 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
     const [error, setError] = useState<string>('')
     const [selectedPlaylistId, setSelectedPlaylistId] = useState<string>('')
     const [playlistSelected, setPlaylistSelected] = useState<boolean>(false)
+    const [isLoaded, setIsLoaded] = useState<boolean>(false)
     const [playlistAnalysis, setPlaylistAnalysis] =
         useState<PlaylistAnalysisData>({
             id: '',
@@ -26,15 +27,7 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
             followers: '',
             trackcount: '',
             topplaylisttracks: [],
-            audiofeatures: {
-                acousticness: '',
-                danceability: '',
-                energy: '',
-                instrumentalness: '',
-                valence: '',
-                tempo: '',
-                loudness: '',
-            },
+            audiofeatures: [],
         })
 
     useEffect(() => {
@@ -48,6 +41,7 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
             })
             .then((res) => {
                 setUserPlaylists(res.data)
+                // setIsLoaded(true)
                 setError('')
             })
             .catch((err) => {
@@ -73,6 +67,8 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
             })
             .then((res) => {
                 setPlaylistAnalysis(res.data)
+                console.log('OUTHERE')
+                console.log(res.data)
                 setError('')
             })
             .catch((err) => {
@@ -84,6 +80,11 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
         console.log(userPlaylists)
         return () => controller.abort()
     }, [playlistSelected])
+
+    useEffect(() => {
+        console.log('OUTHERE2')
+        console.log(playlistAnalysis)
+    }, [playlistAnalysis])
 
     if (!playlistSelected) {
         return (
@@ -136,8 +137,7 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
                             </Button>
                         </div>
                     </Card>
-                    <p>{playlistAnalysis.name}</p>
-                    <p>{playlistAnalysis.description}</p>
+                    <PlaylistCard data={playlistAnalysis} />
                 </div>
             </>
         )
