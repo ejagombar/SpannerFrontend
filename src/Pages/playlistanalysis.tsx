@@ -35,13 +35,13 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
 
         const controller = new AbortController()
 
+        setIsLoaded(false)
         apiClient
             .get<PlaylistAnalysisData[]>('/api/profile/userplaylists', {
                 signal: controller.signal,
             })
             .then((res) => {
                 setUserPlaylists(res.data)
-                // setIsLoaded(true)
                 setError('')
             })
             .catch((err) => {
@@ -82,8 +82,11 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
     }, [playlistSelected])
 
     useEffect(() => {
-        console.log('OUTHERE2')
-        console.log(playlistAnalysis)
+        console.log('set is loaded to true')
+        // console.log(playlistAnalysis)
+        if (playlistAnalysis && playlistAnalysis.audiofeatures.length > 0) {
+            setIsLoaded(true)
+        }
     }, [playlistAnalysis])
 
     if (!playlistSelected) {
@@ -137,7 +140,11 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
                             </Button>
                         </div>
                     </Card>
-                    <PlaylistCard data={playlistAnalysis} />
+                    {isLoaded ? (
+                        <PlaylistCard data={playlistAnalysis} />
+                    ) : (
+                        <p>Loading...</p>
+                    )}
                 </div>
             </>
         )
