@@ -5,6 +5,7 @@ import {
     NavbarBrand,
     NavbarItem,
     Link,
+    Spacer,
 } from '@nextui-org/react'
 import { Key } from 'react'
 import { SpannerLogo } from './icons'
@@ -32,7 +33,8 @@ const Header = ({
     }
 
     return (
-        <div className="flex flex-row items-center pr-1 pl-1">
+        <div className="flex flex-row items-center pr-1">
+            <Spacer x={16}></Spacer>
             <Navbar shouldHideOnScroll>
                 <NavbarBrand>
                     <SpannerLogo size={45}></SpannerLogo>
