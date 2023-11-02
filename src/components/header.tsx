@@ -31,7 +31,7 @@ const Header = ({
     }
 
     return (
-        <Navbar shouldHideOnScroll>
+        <Navbar shouldHideOnScroll position="static">
             <NavbarBrand>
                 <ThemeSwitch></ThemeSwitch>
                 <Button
@@ -42,24 +42,27 @@ const Header = ({
                     Spanner
                 </Button>
             </NavbarBrand>
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
-                {pageNames.slice(1).map((item) => (
-                    <Button
-                        key={item}
-                        radius="full"
-                        variant="bordered"
-                        className={`text-lg ${
-                            currentPage === item
-                                ? 'text-green-500'
-                                : 'text-default-800 border-default-300 hover:text-gray-400'
-                        } `}
-                        onPress={() => handleItemClick(item)}
-                    >
-                        {item}
-                    </Button>
+            <NavbarContent className="hidden sm:flex " justify="center">
+                {pageNames.map((item) => (
+                    <NavbarItem>
+                        <Button
+                            key={item}
+                            radius="full"
+                            variant="bordered"
+                            isDisabled={item != "Home" && !signedIn}
+                            className={`text-lg ${
+                                currentPage === item
+                                    ? 'text-green-500'
+                                    : 'text-default-800 border-default-300 hover:text-gray-400'
+                            } `}
+                            onPress={() => handleItemClick(item)}
+                        >
+                            {item}
+                        </Button>
+                    </NavbarItem>
                 ))}
             </NavbarContent>
-            <NavbarContent justify="start">
+            <NavbarContent justify="end">
                 <NavbarItem>
                     <Button
                         as={Link}

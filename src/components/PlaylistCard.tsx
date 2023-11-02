@@ -1,21 +1,24 @@
 import { Card, Progress, Image, Divider } from '@nextui-org/react'
 import { PlaylistAnalysisData } from '../interfaces'
-import { FeaturedVideo } from '@mui/icons-material'
+import { TrackGridItem } from './gridItem'
+import { ScrollShadow } from '@nextui-org/react'
 
 interface Props {
     data: PlaylistAnalysisData
 }
 const PlaylistCard = ({ data }: Props) => {
-    data.audiofeatures.map((feature, value) =>
-        console.log(feature.name, feature.value, value)
-    )
-
-    console.log(data.audiofeatures)
-    console.log(data.audiofeatures[0].name)
+    let descriptions = new Map<string, string>([
+        ['Acousticness', 'This value is the acoustic value'],
+        ['Danceability', 'How dancaabile is it'],
+        ['Energy', 'How hyped up are you man'],
+        ['Instrumentalness', 'If the playlist is mainly instrumental or not'],
+        ['Valence', 'The speed of the playlist'],
+        ['Tempo', 'Tempo iof the playlist'],
+    ])
 
     return (
         <div className="flex flex-col items-center justify-items-center mt-10 mb-26">
-            <Card className="max-w-[400px] p-5 flex flex-col justify-items-center items-center">
+            <div className="w-[450px] p-5 flex flex-col justify-items-center items-center">
                 <Image
                     width={200}
                     alt="NextUI hero Image"
@@ -34,17 +37,45 @@ const PlaylistCard = ({ data }: Props) => {
 
                 <div className="flex flex-col w-full mt-3">
                     {data.audiofeatures.map((feature, index) => (
-                        <Progress
-                            value={feature.value * 100}
-                            className="max-w-md"
-                            size="md"
-                            label={feature.name}
-                            key={index}
-                            showValueLabel={true}
-                        />
+                        <>
+                            <Progress
+                                value={feature.value * 100}
+                                className="max-w-md"
+                                size="md"
+                                label={feature.name}
+                                key={index}
+                                showValueLabel={true}
+                            />
+                            <p className="pb-5 pt-2 text-default-400">
+                                {descriptions.get(feature.name)}
+                            </p>
+                        </>
                     ))}
                 </div>
-            </Card>
+
+                <Divider className=""></Divider>
+                <p className="pt-5 pb-2 text-3xl">Your Top Tracks</p>
+                <ScrollShadow className="w-[400px] h-[400px]">
+                    {data.topplaylisttracks.map((track) => (
+                        <>
+                            <Card className="m-2 p-2 flex flex-row">
+                                <Image
+                                    width={50}
+                                    alt="Album Cover art"
+                                    src={track.imageUrl}
+                                    radius="none"
+                                />
+                                <div className="pl-2 flex flex-col">
+                                    <p>{track.name}</p>
+                                    <p className="text-default-500">
+                                        {track.artist}
+                                    </p>
+                                </div>
+                            </Card>
+                        </>
+                    ))}
+                </ScrollShadow>
+            </div>
         </div>
     )
 }

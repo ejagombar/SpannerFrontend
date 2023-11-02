@@ -31,7 +31,7 @@ function App() {
     const pageNames: string[] = [
         'Home',
         'Playlist Analysis',
-        'Playlist Comparison',
+        // 'Playlist Comparison',
         'Most Listened',
     ]
     const [selected, setSelected] = useState<Key>('Home')

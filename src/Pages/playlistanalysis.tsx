@@ -5,6 +5,7 @@ import PlaylistSelector from '../components/playlistSelector'
 import { Button, Card } from '@nextui-org/react'
 import PlaylistCard from '../components/PlaylistCard'
 import { PlaylistAnalysisData } from '../interfaces'
+import { Spinner } from '@nextui-org/react'
 
 interface Props {
     userPlaylists: PlaylistAnalysisData[]
@@ -126,7 +127,6 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
                     {error && (
                         <p className="text-warning pt-5 text-xl">{error}</p>
                     )}
-                    <Card className="p-2">
                         <div className="flex flex-row align-middle items-center p-1">
                             <p className="text-6xl pr-5">Playlist Analysis</p>
                             <Button
@@ -139,11 +139,16 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
                                 Back
                             </Button>
                         </div>
-                    </Card>
                     {isLoaded ? (
                         <PlaylistCard data={playlistAnalysis} />
                     ) : (
-                        <p>Loading...</p>
+                        <>
+                            <Spinner
+                                label="Loading..."
+                                size="lg"
+                                className="pt-10"
+                            />
+                        </>
                     )}
                 </div>
             </>

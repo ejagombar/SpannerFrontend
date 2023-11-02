@@ -2,7 +2,7 @@ interface Tracks {
     id: string
     name: string
     artist: string
-    imageurl: string
+    imageUrl: string
 }
 
 export interface AudioFeatures {
