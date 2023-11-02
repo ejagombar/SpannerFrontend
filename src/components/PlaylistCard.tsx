@@ -7,12 +7,20 @@ interface Props {
 }
 const PlaylistCard = ({ data }: Props) => {
     let descriptions = new Map<string, string>([
-        ['Acousticness', 'This value is the acoustic value'],
-        ['Danceability', 'How dancaabile is it'],
-        ['Energy', 'How hyped up are you man'],
-        ['Instrumentalness', 'If the playlist is mainly instrumental or not'],
-        ['Valence', 'The speed of the playlist'],
-        ['Tempo', 'Tempo iof the playlist'],
+        ['Acousticness', 'How acoustic the playlist is as a whole'],
+        [
+            'Danceability',
+            'How dancable the playlist this is. This is calculated by taking data from select tracks in the playlists such as tempo, rhythm and regularity and projecting a value for the entire playlist.',
+        ],
+        [
+            'Energy',
+            'A measurement of intensity and activity of the songs in the playlist. Energetic tracks tend to be fast, loud, and noisy.',
+        ],
+        [
+            'Instrumentalness',
+            'The proportion of tracks that contain no lyrics. A value near 1 represents a playlist that contains almost all instrumental tracks ',
+        ],
+        ['Valence', 'The average speed of the songs in playlist'],
     ])
 
     return (

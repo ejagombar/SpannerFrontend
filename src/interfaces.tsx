@@ -12,7 +12,6 @@ export interface AudioFeatures {
     instrumentalness: string
     valence: string
     tempo: string
-    loudness: string
 }
 
 export interface AudioFeature {

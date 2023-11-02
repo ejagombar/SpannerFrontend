@@ -72,6 +72,7 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
             })
             .then((res) => {
                 setPlaylistAnalysis(res.data)
+                console.log(res.data)
                 setError('')
             })
             .catch((err) => {
