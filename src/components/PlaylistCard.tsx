@@ -1,6 +1,5 @@
 import { Card, Progress, Image, Divider } from '@nextui-org/react'
 import { PlaylistAnalysisData } from '../interfaces'
-import { TrackGridItem } from './gridItem'
 import { ScrollShadow } from '@nextui-org/react'
 
 interface Props {
@@ -54,8 +53,8 @@ const PlaylistCard = ({ data }: Props) => {
                 </div>
 
                 <Divider className=""></Divider>
-                <p className="pt-5 pb-2 text-3xl">Your Top Tracks</p>
-                <ScrollShadow className="w-[400px] h-[400px]">
+                <p className="pt-5 pb-2 text-2xl">Your Top Tracks</p>
+                <ScrollShadow className="w-[400px] h-[600px]">
                     {data.topplaylisttracks.map((track) => (
                         <>
                             <Card className="m-2 p-2 flex flex-row">
@@ -76,6 +75,9 @@ const PlaylistCard = ({ data }: Props) => {
                     ))}
                 </ScrollShadow>
             </div>
+
+            <Divider className="mt-2 mb-5"></Divider>
+            <p className="text-2xl mb-10">[More Features In Development]</p>
         </div>
     )
 }

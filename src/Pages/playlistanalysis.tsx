@@ -14,22 +14,26 @@ interface Props {
     >
 }
 
+function resetPlaylistAnalysis(): PlaylistAnalysisData {
+    return {
+        id: '',
+        name: '',
+        description: '',
+        imagelink: '',
+        followers: '',
+        trackcount: '',
+        topplaylisttracks: [],
+        audiofeatures: [],
+    }
+}
+
 const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
     const [error, setError] = useState<string>('')
     const [selectedPlaylistId, setSelectedPlaylistId] = useState<string>('')
     const [playlistSelected, setPlaylistSelected] = useState<boolean>(false)
     const [isLoaded, setIsLoaded] = useState<boolean>(false)
     const [playlistAnalysis, setPlaylistAnalysis] =
-        useState<PlaylistAnalysisData>({
-            id: '',
-            name: '',
-            description: '',
-            imagelink: '',
-            followers: '',
-            trackcount: '',
-            topplaylisttracks: [],
-            audiofeatures: [],
-        })
+        useState<PlaylistAnalysisData>(resetPlaylistAnalysis())
 
     useEffect(() => {
         if (userPlaylists.length > 0) return
@@ -68,14 +72,11 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
             })
             .then((res) => {
                 setPlaylistAnalysis(res.data)
-                console.log('OUTHERE')
-                console.log(res.data)
                 setError('')
             })
             .catch((err) => {
                 if (err instanceof CanceledError) return
                 setError(err.message)
-                console.log(err.message)
             })
 
         console.log(userPlaylists)
@@ -127,18 +128,20 @@ const PlaylistAnalysis = ({ userPlaylists, setUserPlaylists }: Props) => {
                     {error && (
                         <p className="text-warning pt-5 text-xl">{error}</p>
                     )}
-                        <div className="flex flex-row align-middle items-center p-1">
-                            <p className="text-6xl pr-5">Playlist Analysis</p>
-                            <Button
-                                color="primary"
-                                variant="bordered"
-                                onPress={() => {
-                                    setPlaylistSelected(false)
-                                }}
-                            >
-                                Back
-                            </Button>
-                        </div>
+                    <div className="flex flex-row align-middle items-center p-1">
+                        <p className="text-6xl pr-5">Playlist Analysis</p>
+                        <Button
+                            color="primary"
+                            variant="bordered"
+                            onPress={() => {
+                                setPlaylistSelected(false)
+                                setPlaylistAnalysis(resetPlaylistAnalysis())
+                                setIsLoaded(false)
+                            }}
+                        >
+                            Back
+                        </Button>
+                    </div>
                     {isLoaded ? (
                         <PlaylistCard data={playlistAnalysis} />
                     ) : (
