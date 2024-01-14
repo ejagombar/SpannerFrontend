@@ -41,7 +41,6 @@ const PlaylistCard = ({ data }: Props) => {
                     <p className="text-sm">{data.trackcount} Tracks</p>
                 </div>
                 <Divider></Divider>
-
                 <div className="flex flex-col w-full mt-3">
                     {data.audiofeatures.map((feature, index) => (
                         <>
@@ -59,33 +58,38 @@ const PlaylistCard = ({ data }: Props) => {
                         </>
                     ))}
                 </div>
-
                 <Divider className=""></Divider>
                 <p className="pt-5 pb-2 text-2xl">Your Top Tracks</p>
-                <ScrollShadow className="w-[400px] h-[600px]">
-                    {data.topplaylisttracks.map((track) => (
-                        <>
-                            <Card className="m-2 p-2 flex flex-row">
-                                <Image
-                                    width={50}
-                                    alt="Album Cover art"
-                                    src={track.imageUrl}
-                                    radius="none"
-                                />
-                                <div className="pl-2 flex flex-col">
-                                    <p>{track.name}</p>
-                                    <p className="text-default-500">
-                                        {track.artist}
-                                    </p>
-                                </div>
-                            </Card>
-                        </>
-                    ))}
-                </ScrollShadow>
+                {data.topplaylisttracks.length > 0 && (
+                    <ScrollShadow className="w-[400px] h-[600px]">
+                        {data.topplaylisttracks.map((track) => (
+                            <>
+                                <Card className="m-2 p-2 flex flex-row">
+                                    <Image
+                                        width={50}
+                                        alt="Album Cover art"
+                                        src={track.imageUrl}
+                                        radius="none"
+                                    />
+                                    <div className="pl-2 flex flex-col">
+                                        <p>{track.name}</p>
+                                        <p className="text-default-500">
+                                            {track.artist}
+                                        </p>
+                                    </div>
+                                </Card>
+                            </>
+                        ))}
+                    </ScrollShadow>
+                )}
+                {data.topplaylisttracks.length == 0 && (
+                    <p className="text-md text-default-400">
+                        This playlist contains no top tracks
+                    </p>
+                )}
             </div>
 
-            <Divider className="mt-2 mb-5"></Divider>
-            <p className="text-2xl mb-10">[More Features In Development]</p>
+            <Divider className="mt-5 mb-5"></Divider>
         </div>
     )
 }
