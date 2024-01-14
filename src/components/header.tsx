@@ -56,7 +56,7 @@ const Header = ({
                                 isDisabled={item != 'Home' && !signedIn}
                                 className={`text-lg ${
                                     currentPage === item
-                                        ? 'text-green-500'
+                                        ? 'text-primary'
                                         : 'text-default-800 border-default-300 hover:text-gray-400'
                                 } `}
                                 onPress={() => handleItemClick(item)}

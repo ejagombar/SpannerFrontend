@@ -23,19 +23,19 @@ export default {
                 dark: {
                     colors: {
                         primary: {
-                            DEFAULT: '#21d561',
+                            DEFAULT: '#3ea5ab',
                             foreground: '#000000',
                         },
-                        focus: '#21d561',
+                        focus: '#3ea5ab',
                     },
                 },
                 light: {
                     colors: {
                         primary: {
-                            DEFAULT: '#21d561',
+                            DEFAULT: '#3ea5ab',
                             foreground: '#000000',
                         },
-                        focus: '#21d561',
+                        focus: '#3ea5ab',
                     },
                 },
             },
