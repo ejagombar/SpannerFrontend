@@ -1,34 +1,18 @@
 import './App.css'
 import Header from './components/header'
 import Footer from './components/footer.tsx'
-import { PlaylistInfo } from './interfaces.tsx'
 import { useState } from 'react'
 import { Key } from 'react'
 import Home from './Pages/home.tsx'
 import MostListened, { MostListenedData } from './Pages/mostlistened.tsx'
-import { useEffect } from 'react'
-import apiClient from './services/apiClient.ts'
 import AccountPage, { UserInfo } from './Pages/account.tsx'
 import PlaylistAnalysis from './Pages/playlistanalysis.tsx'
-import playlistMetadata  from './components/playlistSelector.tsx'
-
-const playlistData: PlaylistInfo = {
-    name: '',
-    description: '',
-    imageLink: '',
-    followers: 7533,
-    trackCount: 912,
-    metrics: [ ],
-}
+import { PlaylistAnalysisData } from './interfaces'
 
 function App() {
-    const pageNames: string[] = [
-        'Home',
-        'Playlist Analysis',
-        'Most Listened',
-    ]
+    const pageNames: string[] = ['Home', 'Playlist Analysis', 'Most Listened']
     const [selected, setSelected] = useState<Key>('Home')
-    const signedIn = true
+    const [signedIn, setSignedIn] = useState<boolean>(true)
 
     const [userInfo, setUserInfo] = useState<UserInfo>({
         displayname: '',
@@ -36,7 +20,9 @@ function App() {
         imageurl: '',
     })
 
-    const [userPlaylists, setUserPlaylists] = useState<playlistMetadata[]>([])
+    const [userPlaylists, setUserPlaylists] = useState<PlaylistAnalysisData[]>(
+        []
+    )
 
     const [mostListenedData, setMostListenedData] = useState<MostListenedData>({
         shortTermTracks: [],
@@ -59,6 +45,7 @@ function App() {
             content = (
                 <Home
                     signedIn={signedIn}
+                    setSignedIn={setSignedIn}
                     setCurrentPage={setSelected}
                 />
             )
@@ -86,6 +73,7 @@ function App() {
         case 'Account':
             content = (
                 <AccountPage
+                    setSignedIn={setSignedIn}
                     setSelected={setSelected}
                     setUserInfo={setUserInfo}
                     userInfo={userInfo}
@@ -103,6 +91,7 @@ function App() {
                 <Header
                     pageNames={pageNames}
                     signedIn={signedIn}
+                    setSignedIn={setSignedIn}
                     setCurrentPage={handleSelectionChange}
                     currentPage={selected}
                 ></Header>
