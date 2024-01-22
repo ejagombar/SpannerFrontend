@@ -8,11 +8,22 @@ import MostListened, { MostListenedData } from './Pages/mostlistened.tsx'
 import AccountPage, { UserInfo } from './Pages/account.tsx'
 import PlaylistAnalysis from './Pages/playlistanalysis.tsx'
 import { PlaylistAnalysisData } from './interfaces'
+import {
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Button,
+} from '@nextui-org/react'
 
 function App() {
     const pageNames: string[] = ['Home', 'Playlist Analysis', 'Most Listened']
     const [selected, setSelected] = useState<Key>('Home')
     const [signedIn, setSignedIn] = useState<boolean>(true)
+
+    const [isOpen, setOpen] = useState(true)
+    const handleClose = () => setOpen(false)
 
     const [userInfo, setUserInfo] = useState<UserInfo>({
         displayname: '',
@@ -86,19 +97,51 @@ function App() {
     }
 
     return (
-        <div className="flex flex-col min-h-screen ">
-            <div className="flex-grow">
-                <Header
-                    pageNames={pageNames}
-                    signedIn={signedIn}
-                    setSignedIn={setSignedIn}
-                    setCurrentPage={handleSelectionChange}
-                    currentPage={selected}
-                ></Header>
+        <div>
+            <Modal
+                isOpen={isOpen}
+                onOpenChange={handleClose}
+                size={'lg'}
+                backdrop="opaque"
+            >
+                <ModalContent>
+                    <ModalHeader className="justify-items-centre">
+                        Thank you for visiting this site!
+                    </ModalHeader>
+                    <ModalBody>
+                        <p>
+                            Due to the long process required to obtain a fully
+                            Spotify API key, this website is using a developer
+                            API key.
+                            <br />
+                            <br />
+                            This means that it is currently only able to display
+                            data from my own Spotify account. However, the
+                            website is still fully functional and updates in
+                            real time.
+                        </p>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onPress={handleClose}>
+                            Okay
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+            <div className="flex flex-col min-h-screen ">
+                <div className="flex-grow">
+                    <Header
+                        pageNames={pageNames}
+                        signedIn={signedIn}
+                        setSignedIn={setSignedIn}
+                        setCurrentPage={handleSelectionChange}
+                        currentPage={selected}
+                    ></Header>
 
-                {content}
+                    {content}
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </div>
     )
 }
