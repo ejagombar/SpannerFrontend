@@ -88,40 +88,16 @@ const AccountPage = ({
                             <p className='pt-5'>{userInfo.followercount} Followers</p>
                         </div>
                         <Button
+                            isDisabled
                             className="ml-10 mr-10 mb-5"
                             variant="bordered"
                             color="danger"
-                            onPress={ConfirmSignOutBtn}
                         >
                             Sign Out
                         </Button>
                     </div>
                 </div>
             </div>
-            <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
-                <>
-                    <ModalContent className="max-w-xs">
-                        <ModalHeader>Are you sure?</ModalHeader>
-                        <ModalFooter>
-                            <Button
-                                color="danger"
-                                variant="bordered"
-                                onPress={() =>
-                                    signOutBtn({
-                                        setSelected,
-                                        setSignedIn,
-                                    })
-                                }
-                            >
-                                Sign Out
-                            </Button>
-                            <Button color="danger" onPress={onClose}>
-                                Cancel
-                            </Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </>
-            </Modal>
         </>
     )
 }

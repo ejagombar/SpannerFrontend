@@ -18,23 +18,17 @@ const playlistData: PlaylistInfo = {
     imageLink: '',
     followers: 7533,
     trackCount: 912,
-    metrics: [
-        { name: 'Valence', value: 50 },
-        { name: 'Mood', value: 25 },
-        { name: 'Energy', value: 10 },
-        { name: 'Upbeatness', value: 37 },
-    ],
+    metrics: [ ],
 }
 
 function App() {
     const pageNames: string[] = [
         'Home',
         'Playlist Analysis',
-        // 'Playlist Comparison',
         'Most Listened',
     ]
     const [selected, setSelected] = useState<Key>('Home')
-    const [signedIn, setSignedIn] = useState<boolean>(false)
+    const signedIn = true
 
     const [userInfo, setUserInfo] = useState<UserInfo>({
         displayname: '',
@@ -58,27 +52,6 @@ function App() {
         console.log(key)
     }
 
-    useEffect(() => {
-        apiClient
-            .get<string>('/api/account/authenticated')
-            .then((response) => {
-                if (response.data.toString() === 'true') {
-                    setSignedIn(true)
-                } else {
-                    setSignedIn(false)
-                }
-                console.log('response:', signedIn)
-            })
-            .catch((error) => {
-                console.error('Error fetching variable state:', error)
-                setSignedIn(false)
-            })
-    }, [])
-
-    useEffect(() => {
-        console.log('Alert: signedIn:', signedIn)
-    }, [signedIn])
-
     let content: JSX.Element
 
     switch (selected) {
@@ -86,7 +59,6 @@ function App() {
             content = (
                 <Home
                     signedIn={signedIn}
-                    setSignedIn={setSignedIn}
                     setCurrentPage={setSelected}
                 />
             )
@@ -114,7 +86,6 @@ function App() {
         case 'Account':
             content = (
                 <AccountPage
-                    setSignedIn={setSignedIn}
                     setSelected={setSelected}
                     setUserInfo={setUserInfo}
                     userInfo={userInfo}
@@ -132,7 +103,6 @@ function App() {
                 <Header
                     pageNames={pageNames}
                     signedIn={signedIn}
-                    setSignedIn={setSignedIn}
                     setCurrentPage={handleSelectionChange}
                     currentPage={selected}
                 ></Header>
