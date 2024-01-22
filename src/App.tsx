@@ -1,7 +1,6 @@
 import './App.css'
 import Header from './components/header'
 import Footer from './components/footer.tsx'
-import PlaylistCard from './components/PlaylistCard.tsx'
 import { PlaylistInfo } from './interfaces.tsx'
 import { useState } from 'react'
 import { Key } from 'react'
@@ -11,12 +10,12 @@ import { useEffect } from 'react'
 import apiClient from './services/apiClient.ts'
 import AccountPage, { UserInfo } from './Pages/account.tsx'
 import PlaylistAnalysis from './Pages/playlistanalysis.tsx'
-import { playlistMetadata } from './components/playlistSelector.tsx'
+import playlistMetadata  from './components/playlistSelector.tsx'
 
 const playlistData: PlaylistInfo = {
-    name: 'Waitrose Essentials',
-    description: 'Get in the mood for summer with these upbeat tracks.',
-    imageLink: 'https://example.com/summer-vibes.jpg',
+    name: '',
+    description: '',
+    imageLink: '',
     followers: 7533,
     trackCount: 912,
     metrics: [

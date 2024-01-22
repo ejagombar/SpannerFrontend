@@ -18,7 +18,7 @@ const PlaylistCard = ({ data }: Props) => {
         ],
         [
             'Instrumentalness',
-            'The proportion of tracks that contain no lyrics. A value near 1 represents a playlist that contains almost all instrumental tracks ',
+            'The proportion of tracks that contain no lyrics. A value near 100% represents a playlist that contains almost all instrumental tracks ',
         ],
         ['Valence', 'The average speed of the songs in playlist'],
     ])
