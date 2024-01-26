@@ -6,7 +6,7 @@ interface Props {
     data: PlaylistAnalysisData
 }
 const PlaylistCard = ({ data }: Props) => {
-    let descriptions = new Map<string, string>([
+    const descriptions = new Map<string, string>([
         ['Acousticness', 'How acoustic the playlist is as a whole'],
         [
             'Danceability',
