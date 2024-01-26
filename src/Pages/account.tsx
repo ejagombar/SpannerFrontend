@@ -1,15 +1,8 @@
-import { Key, useEffect, useState } from 'react'
+import { Key, useEffect} from 'react'
 import apiClient from '../services/apiClient'
 import {
-    Card,
-    Divider,
-    Modal,
     Button,
     Image,
-    ModalContent,
-    useDisclosure,
-    ModalHeader,
-    ModalFooter,
 } from '@nextui-org/react'
 import { CanceledError } from 'axios'
 
@@ -17,11 +10,6 @@ export interface UserInfo {
     displayname: string
     followercount: string
     imageurl: string
-}
-
-interface SignOutBtnProps {
-    setSelected: (currentPage: Key) => void
-    setSignedIn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface Props {
@@ -32,24 +20,9 @@ interface Props {
 }
 
 const AccountPage = ({
-    setSelected,
-    setSignedIn,
     userInfo,
     setUserInfo,
 }: Props) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-
-    const ConfirmSignOutBtn = () => {
-        onOpen()
-    }
-
-    const signOutBtn = ({ setSelected, setSignedIn }: SignOutBtnProps) => {
-        console.log('Signed Out')
-        apiClient.post<string>('/api/account/logout')
-        onClose()
-        setSignedIn(false)
-        setSelected('Home')
-    }
 
     useEffect(() => {
         const controller = new AbortController()
@@ -70,7 +43,7 @@ const AccountPage = ({
         }
 
         return () => controller.abort()
-    }, [])
+    }, [setUserInfo, userInfo.displayname])
 
     return (
         <>

@@ -119,6 +119,10 @@ function App() {
                             data from my own Spotify account. However, the
                             website is still fully functional and updates in
                             real time.
+                            <br />
+                            <br />
+                            Also, this website is not designed for mobile! It
+                            will be very broken :(
                         </p>
                     </ModalBody>
                     <ModalFooter>
